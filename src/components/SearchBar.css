@@ -1,0 +1,11 @@
+.search-bar-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.search-bar {
+    min-width: 300px;
+
+}
