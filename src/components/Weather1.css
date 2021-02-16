@@ -1,0 +1,8 @@
+.wall {
+    display: flex;
+    justify-content: center;
+}
+
+.oneCard {
+    max-width: 100px;
+}

@@ -5,10 +5,15 @@ import Openweather from '../api/Openweather';
 import SearchBar from './SearchBar';
 import WeatherList from './WeatherList';
 import WeatherItem from './WeatherItem';
+import OneDay from './OneDay';
 
 
 class App extends React.Component {
-    state = { days: [] };
+    state = { days: [], selectedDay: null, city: 'Turku' };
+
+    componentDidMount() {
+        this.onSearchSubmit('Turku')
+    }
 
     // when user gives city, get data from Openweather
     onSearchSubmit = async term => {
@@ -16,7 +21,9 @@ class App extends React.Component {
             params: { q: term, units: 'metric', lang: 'fi' }
         });
 
-        console.log(response)
+        this.setState({ days: response.data.list, selectedDay: 1, city: term })
+
+
     }
 
 
@@ -26,8 +33,9 @@ class App extends React.Component {
         return (
             <div className="container">
                 <SearchBar onSubmit={this.onSearchSubmit} />
-                <WeatherList />
-                <WeatherItem />
+                <WeatherList days={this.state.days} />
+                <WeatherItem days={this.state.days} city={this.state.city} />
+                <OneDay select={this.state.selectedDay} days={this.state.days} city={this.state.city} />
             </div>
         );
     }
