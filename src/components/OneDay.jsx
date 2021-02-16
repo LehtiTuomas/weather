@@ -1,13 +1,23 @@
 import './OneDay.css'
 import React from 'react';
 
+import North from '@material-ui/icons/ArrowUpward';
+import East from '@material-ui/icons/ArrowForward';
+import South from '@material-ui/icons/ArrowDownward';
+import West from '@material-ui/icons/ArrowBack';
+import NI from '@material-ui/icons/CallMade';
+import SE from '../south_east.svg';
+import SW from '@material-ui/icons/CallReceived';
+import NW from '../north_west.svg';
+
+// Show 'Loading...' if api not nownloaded
 const OneDay = (props) => {
     if (!props.select) {
 
         return <div>Loading...</div>
     }
 
-    console.log(props.select, props.days, props.city, 'OneDay2')
+    //console.log(props.select, props.days, props.city, 'OneDay2')
 
     // Tomorrow UTC 12.00
     const tomorrowUTC = () => {
@@ -57,21 +67,45 @@ const OneDay = (props) => {
 
     const dayName1 = dayName(tomorrowUTC() * 1000)
     const dayName2 = dayName((tomorrowUTC() + 86400) * 1000)
-    const dayName3 = dayName((tomorrowUTC() + 86400 * 2) * 1000)
-    const dayName4 = dayName((tomorrowUTC() + 86400 * 3) * 1000)
+    //const dayName3 = dayName((tomorrowUTC() + 86400 * 2) * 1000)
+    //const dayName4 = dayName((tomorrowUTC() + 86400 * 3) * 1000)
 
     const day1ID = search().indexOf(tomorrowUTC());
     const day2ID = search().indexOf(tomorrowUTC() + 86400);
-    const day3ID = search().indexOf(tomorrowUTC() + (86400 * 2));
-    const day4ID = search().indexOf(tomorrowUTC() + (86400 * 3));
+    //const day3ID = search().indexOf(tomorrowUTC() + (86400 * 2));
+    //const day4ID = search().indexOf(tomorrowUTC() + (86400 * 3));
 
+    // deside wich wind direction arrow to show    
+    const windIcon = (wind) => {
+        if (wind > 20 & wind < 70) {
+            return <SW />
+        }
+        if (wind >= 70 & wind <= 110) {
+            return <West />
+        }
+        if (wind > 110 & wind < 150) {
+            return <img className="windDir" alt="NW" src={NW} />
+        }
+        if (wind >= 150 & wind <= 200) {
+            return <North />
+        }
+        if (wind > 200 & wind < 230) {
+            return <NI />
+        }
+        if (wind >= 230 & wind <= 270) {
+            return <East />
+        }
+        if (wind > 270 & wind < 340) {
+            return <img className="windDir" alt="SE" src={SE} />
+        }
+        if (wind >= 340 & wind <= 360) {
+            return <South />
+        }
+        if (wind >= 0 & wind <= 20) {
+            return <South />
+        }
 
-
-    console.log(props.days[day1ID], dayName1);
-    console.log(props.days[day2ID], dayName2);
-    console.log(props.days[day3ID], dayName3);
-    console.log(props.days[day4ID], dayName4);
-
+    };
 
     // today
     const icon = props.days[0].weather[0].icon
@@ -79,6 +113,7 @@ const OneDay = (props) => {
     const temp = props.days[0].main.temp
     const wind = props.days[0].wind.speed
     const day = 'Tänään'
+    const day1Wind = props.days[0].wind.deg
 
     // day 2
     const icon2 = props.days[day1ID].weather[0].icon
@@ -86,6 +121,7 @@ const OneDay = (props) => {
     const temp2 = props.days[day1ID].main.temp
     const wind2 = props.days[day1ID].wind.speed
     const day2 = dayName1
+    const day2Wind = props.days[day1ID].wind.deg
 
     // day 3
     const icon3 = props.days[day2ID].weather[0].icon
@@ -93,6 +129,7 @@ const OneDay = (props) => {
     const temp3 = props.days[day2ID].main.temp
     const wind3 = props.days[day2ID].wind.speed
     const day3 = dayName2
+    const day3Wind = props.days[day2ID].wind.deg
 
 
     return (
@@ -101,21 +138,27 @@ const OneDay = (props) => {
                 <div className="content oneCard">
                     <div className="header">{day}</div>
                     <img className="center floated ui mini" alt="" src={url} />
-                    <div className="description">{temp}  ℃ {wind} m/s </div>
+                    <div className="description">{temp}  ℃ </div>
+                    <div className="description">{wind} m/s </div>
+                    <div className="description">{windIcon(day1Wind)}</div>
                 </div>
             </div>
             <div className="card">
                 <div className="content oneCard">
                     <div className="header">{day2}</div>
                     <img className="center floated ui mini" alt="" src={url2} />
-                    <div className="description">{temp2}  ℃ {wind2} m/s </div>
+                    <div className="description">{temp2}  ℃ </div>
+                    <div className="description">{wind2} m/s </div>
+                    <div className="description">{windIcon(day2Wind)}</div>
                 </div>
             </div>
             <div className="card">
                 <div className="content oneCard">
                     <div className="header">{day3}</div>
                     <img className="center floated ui mini" alt="" src={url3} />
-                    <div className="description">{temp3}  ℃ {wind3} m/s </div>
+                    <div className="description">{temp3}  ℃ </div>
+                    <div className="description">{wind3} m/s </div>
+                    <div className="description">{windIcon(day3Wind)}</div>
                 </div>
             </div>
         </div>);
