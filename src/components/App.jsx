@@ -3,13 +3,13 @@ import React from 'react';
 import Openweather from '../api/Openweather';
 
 import SearchBar from './SearchBar';
-import WeatherList from './WeatherList';
 import WeatherItem from './WeatherItem';
 import OneDay from './OneDay';
+import AllWeather from './AllWeather';
 
 
 class App extends React.Component {
-    state = { days: [], selectedDay: null, city: 'Turku' };
+    state = { days: [], selectedDay: null, city: '', dayName: 'Tänään' };
 
     componentDidMount() {
         this.onSearchSubmit('Turku')
@@ -22,10 +22,17 @@ class App extends React.Component {
         });
 
         this.setState({ days: response.data.list, selectedDay: 1, city: term })
-
+        console.log(this.state)
 
     }
 
+    handler = (day) => {
+        this.setState({ selectedDay: day })
+    }
+
+    dayNameHandler = (name) => {
+        this.setState({ dayName: name })
+    }
 
 
 
@@ -33,9 +40,10 @@ class App extends React.Component {
         return (
             <div className="container">
                 <SearchBar onSubmit={this.onSearchSubmit} />
-                <WeatherList days={this.state.days} />
+                <br></br>
                 <WeatherItem days={this.state.days} city={this.state.city} />
-                <OneDay select={this.state.selectedDay} days={this.state.days} city={this.state.city} />
+                <OneDay select={this.state.selectedDay} days={this.state.days} selectDay={this.handler} dayName={this.dayNameHandler} />
+                <AllWeather select={this.state.selectedDay} dayName={this.state.dayName} />
             </div>
         );
     }

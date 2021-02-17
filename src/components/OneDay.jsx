@@ -10,8 +10,10 @@ import SE from '../south_east.svg';
 import SW from '@material-ui/icons/CallReceived';
 import NW from '../north_west.svg';
 
-// Show 'Loading...' if api not nownloaded
+
 const OneDay = (props) => {
+
+    // Show 'Loading...' if api not nownloaded
     if (!props.select) {
 
         return <div>Loading...</div>
@@ -28,8 +30,6 @@ const OneDay = (props) => {
         date.setHours(12, 0, 0, 0) // set time 12.00
         let tomorrow = date.setDate(date.getDate() + 1) // get tomorrow date and 12.00 time in milliseconds
         let offset = new Date().getTimezoneOffset() * 60000; //get timezone offset in milliseconds
-
-        // console.log(props.days[7].dt, 'propsilta')
 
 
         if (offset <= 0) {
@@ -65,15 +65,14 @@ const OneDay = (props) => {
 
     };
 
+    // get the name for tomorrow and day after that
     const dayName1 = dayName(tomorrowUTC() * 1000)
     const dayName2 = dayName((tomorrowUTC() + 86400) * 1000)
-    //const dayName3 = dayName((tomorrowUTC() + 86400 * 2) * 1000)
-    //const dayName4 = dayName((tomorrowUTC() + 86400 * 3) * 1000)
 
+    // get the index number for tomorrof and day after that
     const day1ID = search().indexOf(tomorrowUTC());
     const day2ID = search().indexOf(tomorrowUTC() + 86400);
-    //const day3ID = search().indexOf(tomorrowUTC() + (86400 * 2));
-    //const day4ID = search().indexOf(tomorrowUTC() + (86400 * 3));
+
 
     // deside wich wind direction arrow to show    
     const windIcon = (wind) => {
@@ -107,6 +106,26 @@ const OneDay = (props) => {
 
     };
 
+    // Handle click from weathercard and update state in App component
+    const handleClick = (e) => {
+
+        props.selectDay(e);
+
+        //Update name of the day
+        if (e === 1) {
+            props.dayName(day)
+        } else if (e === 2) {
+            props.dayName(day2)
+        } else if (e === 3) {
+            props.dayName(day3)
+        } else {
+            props.dayName('error')
+        }
+
+    }
+
+    // variables for different days
+
     // today
     const icon = props.days[0].weather[0].icon
     const url = `http://openweathermap.org/img/wn/${icon}.png`
@@ -133,8 +152,8 @@ const OneDay = (props) => {
 
 
     return (
-        <div className="ui cards wall">
-            <div className="card">
+        <div className="ui link cards wall" >
+            <div className="card" onClick={() => { handleClick(1) }}>
                 <div className="content oneCard">
                     <div className="header">{day}</div>
                     <img className="center floated ui mini" alt="" src={url} />
@@ -143,7 +162,7 @@ const OneDay = (props) => {
                     <div className="description">{windIcon(day1Wind)}</div>
                 </div>
             </div>
-            <div className="card">
+            <div className="card" onClick={() => { handleClick(2) }}>
                 <div className="content oneCard">
                     <div className="header">{day2}</div>
                     <img className="center floated ui mini" alt="" src={url2} />
@@ -152,7 +171,7 @@ const OneDay = (props) => {
                     <div className="description">{windIcon(day2Wind)}</div>
                 </div>
             </div>
-            <div className="card">
+            <div className="card" onClick={() => { handleClick(3) }}>
                 <div className="content oneCard">
                     <div className="header">{day3}</div>
                     <img className="center floated ui mini" alt="" src={url3} />

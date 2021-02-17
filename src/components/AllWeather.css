@@ -1,0 +1,12 @@
+.wall {
+    display: flex;
+    justify-content: center;
+}
+
+.oneCard {
+    max-width: 300px;
+}
+
+.windDir {
+    max-width: 20px;
+}
