@@ -19,16 +19,17 @@ const OneDay = (props) => {
         return <div>Loading...</div>
     }
 
+
     //console.log(props.select, props.days, props.city, 'OneDay2')
 
     // Tomorrow UTC 12.00
-    const tomorrowUTC = () => {
+    const tomorrowUTC = (time) => {
 
 
         let date = new Date(); //get today date
 
-        date.setHours(12, 0, 0, 0) // set time 12.00
-        let tomorrow = date.setDate(date.getDate() + 1) // get tomorrow date and 12.00 time in milliseconds
+        date.setHours(time, 0, 0, 0) // set time
+        let tomorrow = date.setDate(date.getDate() + 1) // get tomorrow date and time in milliseconds
         let offset = new Date().getTimezoneOffset() * 60000; //get timezone offset in milliseconds
 
 
@@ -59,19 +60,31 @@ const OneDay = (props) => {
 
     // Determine the name of the day from given UTC-code
     const dayName = (e) => {
-        const days = ['Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai', 'Sunnuntai'];
+        const days = ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'];
 
-        return days[new Date(e).getUTCDay() - 1];
-
+        return days[(new Date(e).getUTCDay())]
     };
 
+
     // get the name for tomorrow and day after that
-    const dayName1 = dayName(tomorrowUTC() * 1000)
-    const dayName2 = dayName((tomorrowUTC() + 86400) * 1000)
+    const dayName1 = dayName(tomorrowUTC(12) * 1000)
+    const dayName2 = dayName((tomorrowUTC(12) + 86400) * 1000)
 
     // get the index number for tomorrof and day after that
-    const day1ID = search().indexOf(tomorrowUTC());
-    const day2ID = search().indexOf(tomorrowUTC() + 86400);
+    const day1ID = search().indexOf(tomorrowUTC(12));
+    const day2ID = search().indexOf(tomorrowUTC(12) + 86400);
+
+
+    // get data to show detatailed information:
+
+    // get index numbers for first weather (00:00)
+    const day1IDFirst = search().indexOf(tomorrowUTC(0));
+    const day2IDFirst = search().indexOf(tomorrowUTC(0) + 86400);
+
+    // get index number for last weather (21:00)
+    const dayIDLast = search().indexOf(tomorrowUTC(21) - 86400);
+    const day1IDLast = search().indexOf(tomorrowUTC(21));
+    const day2IDLast = search().indexOf(tomorrowUTC(21) + 86400);
 
 
     // deside wich wind direction arrow to show    
@@ -106,6 +119,7 @@ const OneDay = (props) => {
 
     };
 
+
     // Handle click from weathercard and update state in App component
     const handleClick = (e) => {
 
@@ -113,13 +127,21 @@ const OneDay = (props) => {
 
         //Update name of the day
         if (e === 1) {
-            props.dayName(day)
+            props.dayName(day);
+            props.dayStart(0);
+            props.dayEnd(dayIDLast);
         } else if (e === 2) {
             props.dayName(day2)
+            props.dayStart(day1IDFirst);
+            props.dayEnd(day1IDLast);
         } else if (e === 3) {
             props.dayName(day3)
+            props.dayStart(day2IDFirst);
+            props.dayEnd(day2IDLast);
         } else {
-            props.dayName('error')
+            props.dayName(day);
+            props.dayStart(0);
+            props.dayEnd(dayIDLast)
         }
 
     }
@@ -150,9 +172,10 @@ const OneDay = (props) => {
     const day3 = dayName2
     const day3Wind = props.days[day2ID].wind.deg
 
+    //
 
     return (
-        <div className="ui link cards wall" >
+        <div className="ui link eight doubling cards wall" >
             <div className="card" onClick={() => { handleClick(1) }}>
                 <div className="content oneCard">
                     <div className="header">{day}</div>
