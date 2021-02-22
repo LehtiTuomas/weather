@@ -1,12 +1,17 @@
 .container {
     background-image: url(../background.jpg);
 
-    background-repeat: no-repeat;
-
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-
     height: 100vh;
+}
+
+html,
+body {
+    position: relative;
+    height: 100%;
+    height: 100%;
+    overflow: hidden;
 }

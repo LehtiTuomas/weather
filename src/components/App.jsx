@@ -21,6 +21,7 @@ class App extends React.Component {
         color3: ""
     };
 
+
     componentDidMount() {
         const memory = localStorage.getItem('search')
         if (!memory) {
