@@ -26,6 +26,7 @@
 .item-b {
     grid-column-start: 3;
     text-align: right;
+    color: crimson;
 }
 
 .item-c {

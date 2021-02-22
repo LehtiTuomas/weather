@@ -13,7 +13,7 @@ import NW from '../north_west.svg';
 const AllWeather = (props) => {
     if (!props.select) {
 
-        return <div>Loading...</div>
+        return <div></div>
     };
     //console.log(props.days)
 
@@ -41,8 +41,11 @@ const AllWeather = (props) => {
             let date = new Date(timecode * 1000);
             let hours = date.getHours();
 
-            times.push(hours)
-
+            if (hours < 10) {
+                times.push('0' + hours)
+            } else {
+                times.push(hours)
+            }
         }
 
         times.sort(function (a, b) { return a - b });
@@ -60,7 +63,7 @@ const AllWeather = (props) => {
         }
 
         for (let i = 0; i < oneDay.length; i++) {
-            let tempHour = oneDay[i].main.temp;
+            let tempHour = Math.round(oneDay[i].main.temp);
             allTemps.push(tempHour);
         }
         return allTemps;
@@ -74,7 +77,7 @@ const AllWeather = (props) => {
         }
 
         for (let i = 0; i < oneDay.length; i++) {
-            let speed = oneDay[i].wind.speed;
+            let speed = Math.round(oneDay[i].wind.speed);
             allWind.push(speed);
         }
         return allWind;
@@ -190,7 +193,7 @@ const AllWeather = (props) => {
 
     return (
         <div className="ui cards wall">
-            <div className="card">
+            <div className="card" style={{ backgroundColor: "rgb(230,230,230)" }}>
                 <div className="content">
                     <div className="header">{props.dayName}</div>
                     <div className="detail-container">

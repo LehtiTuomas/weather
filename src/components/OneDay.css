@@ -13,3 +13,54 @@
 .windDir {
     max-width: 20px;
 }
+
+
+.better-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    transition: 0.3s;
+    width: 100px;
+    background-color: rgb(250, 248, 222);
+    height: 100px;
+
+}
+
+.better-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+}
+
+.better-content-header {
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.better.content {
+    padding: 2px 16px;
+}
+
+.better-content-temp {
+    text-align: center;
+    color: crimson;
+}
+
+.better-content-icon {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 35px;
+    width: 50%;
+
+    margin-top: -5px;
+    margin-bottom: -5px;
+
+
+}
+
+.center {
+    margin-left: 8px;
+    margin-right: 8px;
+}

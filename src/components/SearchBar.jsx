@@ -9,12 +9,14 @@ class SearchBar extends React.Component {
         // prevent default form action
         event.preventDefault();
 
+        // update search term to App component
         this.props.onSubmit(this.state.term)
 
+        // empty searchbar after submit
+        this.setState({ term: '' })
+
+
     };
-
-
-
 
     render() {
         return (

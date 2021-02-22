@@ -1,22 +1,13 @@
 import './OneDay.css'
 import React from 'react';
 
-import North from '@material-ui/icons/ArrowUpward';
-import East from '@material-ui/icons/ArrowForward';
-import South from '@material-ui/icons/ArrowDownward';
-import West from '@material-ui/icons/ArrowBack';
-import NI from '@material-ui/icons/CallMade';
-import SE from '../south_east.svg';
-import SW from '@material-ui/icons/CallReceived';
-import NW from '../north_west.svg';
-
-
 const OneDay = (props) => {
+
 
     // Show 'Loading...' if api not nownloaded
     if (!props.select) {
 
-        return <div>Loading...</div>
+        return <div></div>
     }
 
 
@@ -87,37 +78,7 @@ const OneDay = (props) => {
     const day2IDLast = search().indexOf(tomorrowUTC(21) + 86400);
 
 
-    // deside wich wind direction arrow to show    
-    const windIcon = (wind) => {
-        if (wind > 20 & wind < 70) {
-            return <SW />
-        }
-        if (wind >= 70 & wind <= 110) {
-            return <West />
-        }
-        if (wind > 110 & wind < 150) {
-            return <img className="windDir" alt="NW" src={NW} />
-        }
-        if (wind >= 150 & wind <= 200) {
-            return <North />
-        }
-        if (wind > 200 & wind < 230) {
-            return <NI />
-        }
-        if (wind >= 230 & wind <= 270) {
-            return <East />
-        }
-        if (wind > 270 & wind < 340) {
-            return <img className="windDir" alt="SE" src={SE} />
-        }
-        if (wind >= 340 & wind <= 360) {
-            return <South />
-        }
-        if (wind >= 0 & wind <= 20) {
-            return <South />
-        }
 
-    };
 
 
     // Handle click from weathercard and update state in App component
@@ -125,19 +86,22 @@ const OneDay = (props) => {
 
         props.selectDay(e);
 
-        //Update name of the day
+        //Update name of the day, day color and day start/end timecodes to App state
         if (e === 1) {
             props.dayName(day);
             props.dayStart(0);
             props.dayEnd(dayIDLast);
+            props.color('rgb(230,230,230', '', '')
         } else if (e === 2) {
             props.dayName(day2)
             props.dayStart(day1IDFirst);
             props.dayEnd(day1IDLast);
+            props.color('', 'rgb(230,230,230', '')
         } else if (e === 3) {
             props.dayName(day3)
             props.dayStart(day2IDFirst);
             props.dayEnd(day2IDLast);
+            props.color('', '', 'rgb(230,230,230)')
         } else {
             props.dayName(day);
             props.dayStart(0);
@@ -151,56 +115,45 @@ const OneDay = (props) => {
     // today
     const icon = props.days[0].weather[0].icon
     const url = `http://openweathermap.org/img/wn/${icon}.png`
-    const temp = props.days[0].main.temp
-    const wind = props.days[0].wind.speed
+    const temp = Math.round(props.days[0].main.temp)
     const day = 'Tänään'
-    const day1Wind = props.days[0].wind.deg
 
     // day 2
     const icon2 = props.days[day1ID].weather[0].icon
     const url2 = `http://openweathermap.org/img/wn/${icon2}.png`
-    const temp2 = props.days[day1ID].main.temp
-    const wind2 = props.days[day1ID].wind.speed
+    const temp2 = Math.round(props.days[day1ID].main.temp)
     const day2 = dayName1
-    const day2Wind = props.days[day1ID].wind.deg
 
     // day 3
     const icon3 = props.days[day2ID].weather[0].icon
     const url3 = `http://openweathermap.org/img/wn/${icon3}.png`
-    const temp3 = props.days[day2ID].main.temp
-    const wind3 = props.days[day2ID].wind.speed
+    const temp3 = Math.round(props.days[day2ID].main.temp)
     const day3 = dayName2
-    const day3Wind = props.days[day2ID].wind.deg
 
-    //
+
+    // ui link eight doubling cards wall
 
     return (
         <div className="ui link eight doubling cards wall" >
-            <div className="card" onClick={() => { handleClick(1) }}>
-                <div className="content oneCard">
-                    <div className="header">{day}</div>
-                    <img className="center floated ui mini" alt="" src={url} />
-                    <div className="description">{temp}  ℃ </div>
-                    <div className="description">{wind} m/s </div>
-                    <div className="description">{windIcon(day1Wind)}</div>
+            <div className="better-card" style={{ backgroundColor: props.color1 }} onClick={() => { handleClick(1) }}>
+                <div className="better-content">
+                    <div className="better-content-header">{day}</div>
+                    <img className="better-content-icon" alt="" src={url} />
+                    <div className="better-content-temp">{temp}  ℃ </div>
                 </div>
             </div>
-            <div className="card" onClick={() => { handleClick(2) }}>
-                <div className="content oneCard">
-                    <div className="header">{day2}</div>
-                    <img className="center floated ui mini" alt="" src={url2} />
-                    <div className="description">{temp2}  ℃ </div>
-                    <div className="description">{wind2} m/s </div>
-                    <div className="description">{windIcon(day2Wind)}</div>
+            <div className="better-card center" style={{ backgroundColor: props.color2 }} onClick={() => { handleClick(2) }}>
+                <div className="better-content">
+                    <div className="better-content-header">{day2}</div>
+                    <img className="better-content-icon" alt="" src={url2} />
+                    <div className="better-content-temp">{temp2}  ℃ </div>
                 </div>
             </div>
-            <div className="card" onClick={() => { handleClick(3) }}>
-                <div className="content oneCard">
-                    <div className="header">{day3}</div>
-                    <img className="center floated ui mini" alt="" src={url3} />
-                    <div className="description">{temp3}  ℃ </div>
-                    <div className="description">{wind3} m/s </div>
-                    <div className="description">{windIcon(day3Wind)}</div>
+            <div className="better-card" style={{ backgroundColor: props.color3 }} onClick={() => { handleClick(3) }}>
+                <div className="better-content">
+                    <div className="better-content-header">{day3}</div>
+                    <img className="better-content-icon" alt="" src={url3} />
+                    <div className="better-content-temp">{temp3}  ℃ </div>
                 </div>
             </div>
         </div>);

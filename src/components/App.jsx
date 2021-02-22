@@ -15,31 +15,27 @@ class App extends React.Component {
         city: '',
         dayName: 'Valitse päivä',
         dayIDstart: null,
-        dayIDend: null
-
+        dayIDend: null,
+        color1: "",
+        color2: "",
+        color3: ""
     };
 
     componentDidMount() {
-        this.onSearchSubmit('Turku')//.catch((error) => { console.log(error.message) })
+        const memory = localStorage.getItem('search')
+        if (!memory) {
+            this.onSearchSubmit('Turku')
+        } else {
+            this.onSearchSubmit(memory)
+        }
     }
-
-    // when user gives city, get data from Openweather
-    /*
-    onSearchSubmit = async term => {
-        const response = await Openweather.get('/data/2.5/forecast', {
-            params: { q: term, units: 'metric', lang: 'fi' }
-        });
-
-        this.setState({ days: response.data.list, selectedDay: 1, city: term })
-
-    }*/
 
     // error handling for api call
     onSearchSubmit = (term) => {
         this.Search(term).catch((error) => {
             if (error.response) { this.setState({ selectedDay: null, city: 'Kaupunkia ei löydy' }) }
             else if (error.request) { this.setState({ selectedDay: null, city: 'Ei internet yhteyttä' }) }
-            else { this.setState({ selectedDay: null, city: 'jokin meni pieleen' }) }
+            else { this.setState({ selectedDay: null, city: 'Jokin meni pieleen' }) }
         })
     }
 
@@ -51,9 +47,9 @@ class App extends React.Component {
 
         this.setState({ days: response.data.list, selectedDay: 1, city: term })
 
+        localStorage.setItem('search', this.state.city)
+
     }
-
-
 
 
 
@@ -73,6 +69,9 @@ class App extends React.Component {
         this.setState({ dayIDend: id })
     }
 
+    colorHandler = (code1, code2, code3) => {
+        this.setState({ color1: code1, color2: code2, color3: code3 })
+    }
 
 
     render() {
@@ -80,7 +79,11 @@ class App extends React.Component {
             <div className="container">
                 <SearchBar onSubmit={this.onSearchSubmit} />
                 <br></br>
-                <WeatherItem days={this.state.days} city={this.state.city} />
+                <WeatherItem
+                    days={this.state.days}
+                    city={this.state.city}
+                    select={this.state.selectedDay}
+                />
                 <OneDay
                     select={this.state.selectedDay}
                     days={this.state.days}
@@ -88,6 +91,10 @@ class App extends React.Component {
                     dayName={this.dayNameHandler}
                     dayStart={this.dayStartHandler}
                     dayEnd={this.dayEndHandler}
+                    color1={this.state.color1}
+                    color2={this.state.color2}
+                    color3={this.state.color3}
+                    color={this.colorHandler}
                 />
                 <AllWeather
                     koira={this.state.dayIDend}
