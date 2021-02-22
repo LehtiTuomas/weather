@@ -193,7 +193,7 @@ const AllWeather = (props) => {
 
     return (
         <div className="ui cards wall">
-            <div className="card" style={{ backgroundColor: "rgb(230,230,230)" }}>
+            <div className="card main" style={{ backgroundColor: "rgb(230,230,230)" }}>
                 <div className="content">
                     <div className="header">{props.dayName}</div>
                     <div className="detail-container">

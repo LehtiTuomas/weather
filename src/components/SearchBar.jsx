@@ -15,6 +15,8 @@ class SearchBar extends React.Component {
         // empty searchbar after submit
         this.setState({ term: '' })
 
+        // close mobile devise keyboard after submit
+        document.activeElement.blur();
 
     };
 

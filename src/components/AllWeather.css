@@ -3,6 +3,14 @@
     justify-content: center;
 }
 
+@media only screen and (max-height: 700px) {
+
+    .main {
+        overflow-y: auto;
+        max-height: 210px;
+    }
+}
+
 .oneCard {
     max-width: 300px;
 }

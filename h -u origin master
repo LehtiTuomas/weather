@@ -1,0 +1,59 @@
+[33mcommit 7b8a5eb996d332602936ab223564f513dd354867[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Mon Feb 22 15:17:53 2021 +0200
+
+    Added demo file for API whitout real api key
+
+[33mcommit 9c729b6f1f05e4dbdf6794a8c3ae803d03c8060b[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Mon Feb 22 14:23:33 2021 +0200
+
+    Added favicons, fixed some bugs and rounded temp.
+
+[33mcommit 3976cb13c9f7ab4436cedffc367219990ac2f592[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Mon Feb 22 13:01:41 2021 +0200
+
+    Redesining days and cleaning some code.
+
+[33mcommit ef863dfa689fed32fbc765e18f92f85c550ec0d8[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Sat Feb 20 12:19:05 2021 +0200
+
+    added data to 24h weather and error handling.
+
+[33mcommit c7d5884a1998183cb38aaaac933fd8c5ee034f5d[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Wed Feb 17 14:48:58 2021 +0200
+
+    Added card for 24h weather and cleaned some code.
+
+[33mcommit 4af51ad47551cebd2149f93fd146d314a9003e6c[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Tue Feb 16 16:06:33 2021 +0200
+
+    Added windd-direction arrows
+
+[33mcommit 9a334549262b5831fa866a9d746d2403d0e4fb83[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Tue Feb 16 10:04:49 2021 +0200
+
+    Implementing 3 day weather
+
+[33mcommit e520cfc6640b4d4017fe3028d8b0201da8400880[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Thu Feb 11 16:17:47 2021 +0200
+
+    Implement API call
+
+[33mcommit 35eb3930ea2cfec9de7da1f68e3809a43a540d5e[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Thu Feb 11 12:10:07 2021 +0200
+
+    Initial setup and setting up the SearchBar
+
+[33mcommit 767be39450d0a8fffc3f122ef95a4c8f346570ab[m
+Author: Tuomas Lehti <lehti.tuomas@gmail.com>
+Date:   Thu Feb 11 09:01:51 2021 +0200
+
+    Initialize project using Create React App
